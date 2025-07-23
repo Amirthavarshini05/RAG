@@ -5,11 +5,9 @@ from embeddings import get_embedder, embed_text
 from vectorstore import setup_qdrant, add_chunks_to_qdrant, search
 from llm_model import load_llm, generate_answer
 
-# 🧠 Load embedder and LLM
 embedder = get_embedder()
 tokenizer, model = load_llm()
 
-# ✅ Build Knowledge Base (Run only once at start)
 def build_knowledge_base():
     setup_qdrant()
     all_chunks = []
@@ -38,7 +36,6 @@ def build_knowledge_base():
     print(f"✅ {len(all_chunks)} chunks uploaded to Qdrant.")
 
 
-# 💬 Get response to a user query
 def get_response(query):
     query_embedding = embed_text(embedder, query)
     results = search(query_embedding, top_k=1)
@@ -50,7 +47,6 @@ def get_response(query):
     context = top.payload
     print("DEBUG payload keys:", context.keys())  # ✅ safe logging
 
-    # Extract values safely
     text = context.get("text", "[Text missing]")
     filename = context.get("filename", "Unknown")
     page = context.get("page", "?")
