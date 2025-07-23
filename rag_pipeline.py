@@ -55,9 +55,7 @@ def get_response(query):
     filename = context.get("filename", "Unknown")
     page = context.get("page", "?")
     chunk_id = context.get("chunk_id", "unknown")
-
-    context = top.payload['text']
-    question = query
+    
     answer = generate_answer(context, question, tokenizer, model)
 
 
